@@ -1,0 +1,76 @@
+import React, { Component } from 'react';
+import {
+    AppRegistry,
+    StyleSheet,
+    Text,
+    ListView,
+    View
+} from 'react-native';
+
+export default class Home extends Component {
+    constructor() {
+	super();
+	const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+	this.state = {
+	    dataSource: ds.cloneWithRows([
+		{
+		    name:'Device 1',
+		    status: 'active',
+		},
+		{
+		    name: 'Device 2',
+		    status: 'active',
+		}
+	    ]),
+	};
+    }
+    
+    renderRow(row) {
+	return (
+	    <View>
+	    <View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
+		<Text>
+		    {row.name}
+		</Text>
+		<Text>
+		    {row.status}
+		</Text>
+	    </View>
+	    <View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
+		<Text>
+		    {row.name}
+		</Text>
+		<Text>
+		    {row.status}
+		</Text>
+	    </View>
+	    <View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
+		<Text>
+		    {row.name}
+		</Text>
+		<Text>
+		    {row.status}
+		</Text>
+	    </View>
+	    </View>
+	);
+    }
+    
+    render() {
+	return (
+	    <View style={styles.container}>
+		<ListView
+		    dataSource={this.state.dataSource}
+		    renderRow={this.renderRow.bind(this)}
+		/>
+	    </View>
+	);
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+	flex: 1,
+	backgroundColor: 'white',
+    },
+});
