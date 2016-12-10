@@ -17,6 +17,8 @@ import {
 import Router from 'react-native-simple-router';
 import {HomeRoute} from './screens';
 import {listen, sendMessage} from './utils/util';
+import store from './utils/store';
+import { Provider } from 'react-redux';
 
 function onStart() {
     listen(message => {
@@ -33,10 +35,12 @@ class Obol extends Component {
     	
     render() {
 	return (
-	    <Router
-		firstRoute={HomeRoute}
-		headerStyle={styles.header}
+	    <Provider store={store}>
+		<Router
+		    firstRoute={HomeRoute}
+		    headerStyle={styles.header}
 	    />
+	    </Provider>
 	);
     }
 }

@@ -1,0 +1,11 @@
+import { combineReducers } from 'redux';
+
+const initialState = {
+      home: "lol"
+}
+
+export default function reducer(state = initalState, action = {}) {
+       switch (action.type) {
+       	      
+}      
+}

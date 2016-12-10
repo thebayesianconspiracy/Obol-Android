@@ -4,13 +4,15 @@ import {
     StyleSheet,
     TouchableOpacity,
     Text,
+    Alert,
     View,
     Picker,
     TextInput,
 } from 'react-native';
 import {sendMessage} from '../utils/util';
+import { connect } from 'react-redux';
 
-export default class SetupDevice extends Component {
+class SetupDevice extends Component {
     constructor(props) {
 	super(props);
 	const {row} = this.props;
@@ -22,7 +24,13 @@ export default class SetupDevice extends Component {
     }
 
     submit() {
-	
+	const {row} = this.props;
+	this.props.dispatch({
+	    type: "UPDATE",
+	    id: row["name"],
+	    data: Object.assign(row, this.state),
+	})
+	this.props.toBack();
     }
     
     render() {
@@ -42,9 +50,9 @@ export default class SetupDevice extends Component {
 			Set to zero
 		    </Text>
 		</TouchableOpacity>
-		<TextInput value={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
-		<TextInput value={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
-		<TouchableOpacity style={{backgroundColor: 'blue'}}>
+		<TextInput defaultValue={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
+		<TextInput defaultValue={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
+		<TouchableOpacity onPress={this.submit.bind(this)} style={{backgroundColor: 'blue'}}>
 		    <Text style={{margin: 10, borderRadius: 10, color: 'white'}}>
 			Save
 		    </Text>
@@ -60,3 +68,13 @@ const styles = StyleSheet.create({
 	backgroundColor: 'white',
     },
 });
+
+
+mapStateToProps = function(state) {
+    return {
+	devices: state.app,
+    }
+}
+
+
+export default connect(mapStateToProps)(SetupDevice);

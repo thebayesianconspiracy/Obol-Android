@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 import {HomeRoute, DeviceRoute, SetupDeviceRoute} from './index.js';
+import { connect } from 'react-redux';
 
 function RightButton(props) {
     return (<TouchableOpacity
@@ -18,38 +19,10 @@ function RightButton(props) {
     </TouchableOpacity>);
 }
 
-export default class Home extends Component {
+class Home extends Component {
     constructor() {
 	super();
-	const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-	this.state = {
-	    dataSource: ds.cloneWithRows([
-		{
-		    name:'Device 1',
-		    status: 'active',
-		    weight: "500",
-		    category: 'medicine',
-		    item: 'apple',
-		    quant: "5",
-		    messages: [
-			{content: "Hide yo kids"},
-			{content: "Woah"},
-		    ],
-		},
-		{
-		    name: 'Device 2',
-		    status: 'active',
-		    weight: "600",
-		    category: 'food',
-		    item: 'coocount',
-		    quant: "10",
-		    messages: [
-			{content: "Blah blah"},
-			{content: "SOmething'sgoing on"},
-		    ],
-		}
-	    ]),
-	};
+	this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
     
     renderRow(rowItem) {
@@ -98,10 +71,12 @@ export default class Home extends Component {
     }
     
     render() {
+	const devices = this.props.devices.toJS();
+	const rows = Object.keys(devices).map(function (key) { return devices[key]; });
 	return (
 	    <View style={styles.container}>
 		<ListView
-		    dataSource={this.state.dataSource}
+		    dataSource={this.ds.cloneWithRows(rows)}
 		    renderRow={this.renderRow.bind(this)}
 		/>
 	    </View>
@@ -115,3 +90,12 @@ const styles = StyleSheet.create({
 	backgroundColor: 'white',
     },
 });
+
+mapStateToProps = function(state) {
+    return {
+	devices: state.app,
+    }
+}
+
+
+export default connect(mapStateToProps)(Home);
