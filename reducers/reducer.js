@@ -15,6 +15,7 @@ const initialState = Immutable.fromJS({
 	unitweight: "100",
 	messages: [
 	],
+	notifications: [],
     },
     "PI_2": {
 	name:'PI_2',
@@ -26,6 +27,7 @@ const initialState = Immutable.fromJS({
 	unitweight: "100",
 	messages: [
 	],
+	notifications: [],
     },
 });
 
@@ -77,10 +79,14 @@ function app(state = initialState, action = {}) {
 		   const old_quant = device.get('quant');
 		   const new_weight = average(_messages);
 		   const newquant = parseInt(Math.round(new_weight/parseFloat(device.get('unitweight'))));
+		   var notif = null;
 		   if (category == 'Food') {
 		       if (newquant < old_quant) {
-			   Alert.alert("You ate " + (old_quant - newquant) + " units of " + item + ". Calories consumed is: " + (parseFloat(old_weight)-parseFloat(new_weight))*calories[item]/4400);
+			  var notif = ("You ate " + (old_quant - newquant) + " units of " + item + ". Calories consumed is: " + (parseFloat(old_weight)-parseFloat(new_weight))*calories[item]/4400);
 		       }
+		   }
+		   if (notif){
+		       device = device.updateIn(["notifications"], notifs => notifs.concat([notif]))
 		   }
 		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+newquant);
 	       })

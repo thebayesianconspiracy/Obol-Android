@@ -15,7 +15,8 @@ import { connect } from 'react-redux';
 class SetupDevice extends Component {
     constructor(props) {
 	super(props);
-	const {row} = this.props;
+	var {row} = this.props;
+	delete row["weight"];
 	this.state = {
 	    category: row.category || "Food",
 	    item: row.item,
@@ -32,7 +33,8 @@ class SetupDevice extends Component {
     }
 
     submit() {
-	const {row} = this.props;
+	var {row} = this.props;
+	delete row["weight"];
 	this.save(row);
 	this.props.toBack();
     }
@@ -48,6 +50,7 @@ class SetupDevice extends Component {
 	var {row} = this.props;
 	row.item = "";
 	row.quant = "0";
+	delete row["weight"];
 	this.save(row);
     }
     

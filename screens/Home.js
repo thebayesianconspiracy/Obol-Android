@@ -11,6 +11,10 @@ import {
 import {HomeRoute, DeviceRoute, SetupDeviceRoute} from './index.js';
 import { connect } from 'react-redux';
 
+function nameMap(name) {
+   return (name == "PI_1" )?"Device 1": "Device 2"
+}
+
 function RightButton(props) {
     return (<TouchableOpacity
 		{...props}
@@ -30,29 +34,33 @@ class Home extends Component {
 	const setupPress = () => {
 	    this.props.toRoute(Object.assign({
 		passProps: {row},
-	    }, SetupDeviceRoute));
+	    }, SetupDeviceRoute, {
+		name: nameMap(row.name)
+	    }));
 	};
 
 	const onPress = () => {
 	    this.props.toRoute(Object.assign({
 		passProps: {row},
 		rightCorner: () => <RightButton onPress={setupPress}/>,
-	    }, DeviceRoute));
+	    }, DeviceRoute, {
+		name: nameMap(row.name)
+	    }));
 	};
 	
 	return (
-	    <TouchableOpacity style={{padding: 10}} onPress={onPress}>
+	    <TouchableOpacity style={{padding: 10, borderBottomWidth: 1, margin: 5, borderColor: 'black'}} onPress={onPress}>
 		<View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
 		    <Text>
-			{rowItem.name}
+			{nameMap(rowItem.name)}
 		    </Text>
-		    <Text>
-			{rowItem.status}
-		    </Text>
+		    <View style={{borderRadius: 15, width: 10, height: 10, backgroundColor: 'green'}}>
+			
+		    </View>
 		</View>
-		<View style={{justifyContent: 'flex-start', flexDirection: 'row',}}>
-		    <Text>
-			{rowItem.weight}
+		<View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+		    <Text style={{fontSize: 50, fontWeight: 'bold'}}>
+			{rowItem.quant} Units
 		    </Text>
 		</View>
 		<View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
@@ -60,7 +68,7 @@ class Home extends Component {
 			{rowItem.item}
 		    </Text>
 		    <Text>
-			{rowItem.quant}
+			{rowItem.weight} gm
 		    </Text>
 		    <Text>
 			{rowItem.category}

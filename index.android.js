@@ -32,7 +32,7 @@ function onStart() {
 //	    Alert.alert("Message is", "weight " + data.weight)
 	}
 	catch(e) {
-	    Alert.alert("Message is", "error "+JSON.stringify(e))
+//	    Alert.alert("Message is", "error "+JSON.stringify(e))
 	}
 //	Alert.alert("Message is", message)
     })
@@ -49,6 +49,7 @@ class Obol extends Component {
 	return (
 	    <Provider store={store}>
 		<Router
+		    backButtonComponent={() => (<Text style={{color: 'white', padding: 5, fontSize: 12}}>Back</Text>)}
 		    firstRoute={HomeRoute}
 		    headerStyle={styles.header}
 	    />
@@ -59,7 +60,7 @@ class Obol extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#5cafec',
+    backgroundColor: 'purple',
   },
 });
 
