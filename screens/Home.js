@@ -8,7 +8,7 @@ import {
     ListView,
     View
 } from 'react-native';
-import {DeviceRoute, SetupDeviceRoute} from './index.js';
+import {HomeRoute, DeviceRoute, SetupDeviceRoute} from './index.js';
 
 function RightButton(props) {
     return (<TouchableOpacity
@@ -27,10 +27,10 @@ export default class Home extends Component {
 		{
 		    name:'Device 1',
 		    status: 'active',
-		    weight: 500,
+		    weight: "500",
 		    category: 'medicine',
 		    item: 'apple',
-		    quant: 5,
+		    quant: "5",
 		    messages: [
 			{content: "Hide yo kids"},
 			{content: "Woah"},
@@ -39,10 +39,10 @@ export default class Home extends Component {
 		{
 		    name: 'Device 2',
 		    status: 'active',
-		    weight: 600,
+		    weight: "600",
 		    category: 'food',
 		    item: 'coocount',
-		    quant: 10,
+		    quant: "10",
 		    messages: [
 			{content: "Blah blah"},
 			{content: "SOmething'sgoing on"},
@@ -52,40 +52,45 @@ export default class Home extends Component {
 	};
     }
     
-    renderRow(row) {
+    renderRow(rowItem) {
+	const row = Object.assign({}, rowItem);
+	const setupPress = () => {
+	    this.props.toRoute(Object.assign({
+		passProps: {row},
+	    }, SetupDeviceRoute));
+	};
+
+	const onPress = () => {
+	    this.props.toRoute(Object.assign({
+		passProps: {row},
+		rightCorner: () => <RightButton onPress={setupPress}/>,
+	    }, DeviceRoute));
+	};
+	
 	return (
-	    <TouchableOpacity style={{padding: 10}} onPress={() => {
-		    this.props.toRoute(Object.assign({
-			passProps: {row},
-			rightCorner: () => <RightButton onPress={() => {
-				this.props.toRoute(Object.assign({
-				    passProps: {row}
-				}, SetupDeviceRoute));
-			    }}/>,
-		    }, DeviceRoute));
-		}}>
+	    <TouchableOpacity style={{padding: 10}} onPress={onPress}>
 		<View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
 		    <Text>
-			{row.name}
+			{rowItem.name}
 		    </Text>
 		    <Text>
-			{row.status}
+			{rowItem.status}
 		    </Text>
 		</View>
 		<View style={{justifyContent: 'flex-start', flexDirection: 'row',}}>
 		    <Text>
-			{row.weight}
+			{rowItem.weight}
 		    </Text>
 		</View>
 		<View style={{justifyContent: 'space-between', flexDirection: 'row',}}>
 		    <Text>
-			{row.item}
+			{rowItem.item}
 		    </Text>
 		    <Text>
-			{row.quant}
+			{rowItem.quant}
 		    </Text>
 		    <Text>
-			{row.category}
+			{rowItem.category}
 		    </Text>
 		</View>
 	    </TouchableOpacity>

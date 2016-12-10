@@ -9,13 +9,27 @@ import {
   AppRegistry,
     StyleSheet,
     TouchableHighlight,
+    AsyncStorage,
+    Alert,
     Text,
   View
 } from 'react-native';
 import Router from 'react-native-simple-router';
 import {HomeRoute} from './screens';
+import {listen, sendMessage} from './utils/util';
+
+function onStart() {
+    listen(message => {
+	Alert.alert("Message is", message)
+    })
+}
 
 class Obol extends Component {
+
+    constructor(){
+	super();
+	onStart();
+    }
     	
     render() {
 	return (
