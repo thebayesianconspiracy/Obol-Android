@@ -54,7 +54,7 @@ class Device extends Component {
 			    {rowItem.item}
 			</Text>
 			<Text>
-			    {rowItem.weight} gm
+			    {(parseFloat(rowItem.weight)/rowItem.cal).toFixed(2)} gm
 			</Text>
 			<Text>
 			    {rowItem.category}

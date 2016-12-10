@@ -12,6 +12,7 @@ const initialState = Immutable.fromJS({
 	category: 'Food',
 	item: 'apple',
 	quant: "5",
+	cal: 44,
 	unitweight: "100",
 	messages: [
 	],
@@ -22,6 +23,7 @@ const initialState = Immutable.fromJS({
 	status: 'active',
 	weight: "500",
 	category: 'Food',
+	cal: 5.6,
 	item: 'bread',
 	quant: "5",
 	unitweight: "100",
@@ -82,7 +84,7 @@ function app(state = initialState, action = {}) {
 		   var notif = null;
 		   if (category == 'Food') {
 		       if (newquant < old_quant) {
-			  var notif = ("You ate " + (old_quant - newquant) + " units of " + item + ". Calories consumed is: " + (parseFloat(old_weight)-parseFloat(new_weight))*calories[item]/4400);
+			  var notif = ("You ate " + (old_quant - newquant) + " units of " + item + ". Calories consumed is: " + ((parseFloat(old_weight)-parseFloat(new_weight))*calories[item]/4400.0).toFixed(2));
 		       }
 		   }
 		   if (notif){
