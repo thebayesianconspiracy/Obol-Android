@@ -36,7 +36,7 @@ const initialState = Immutable.fromJS({
 const calories = {
     "apple": 52,
     "banana": 89,
-    "bread": 65,
+    "bread": 65*33,
 }
 
 function allEqual(arr) {
