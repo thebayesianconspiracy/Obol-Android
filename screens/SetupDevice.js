@@ -23,14 +23,32 @@ class SetupDevice extends Component {
 	}
     }
 
-    submit() {
-	const {row} = this.props;
+    save(row) {
 	this.props.dispatch({
 	    type: "UPDATE",
 	    id: row["name"],
 	    data: Object.assign(row, this.state),
 	})
+    }
+
+    submit() {
+	const {row} = this.props;
+	this.save(row);
 	this.props.toBack();
+    }
+
+    tare() {
+	sendMessage(JSON.stringify({appID: "APP_1", deviceID: this.props.row.name}), "obol/tare");
+	this.refs.item.setNativeProps({text: ''})
+	this.refs.quant.setNativeProps({text: ''})
+	this.setState({
+	    item: "",
+	    quant: "0",
+	});
+	var {row} = this.props;
+	row.item = "";
+	row.quant = "0";
+	this.save(row);
     }
     
     render() {
@@ -43,15 +61,13 @@ class SetupDevice extends Component {
 		    <Picker.Item label="Food" value="Food" />
 		    <Picker.Item label="Medicine" value="Medicine" />
 		</Picker>
-		<TouchableOpacity style={{backgroundColor: 'blue'}} onPress={() => {
-			sendMessage("set to zero", "/yoyo123");
-		    }}>
+		<TouchableOpacity style={{backgroundColor: 'blue'}} onPress={this.tare.bind(this)}>
 		    <Text style={{margin: 10, borderRadius: 10, color: 'white'}}>
 			Set to zero
 		    </Text>
 		</TouchableOpacity>
-		<TextInput defaultValue={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
-		<TextInput defaultValue={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
+		<TextInput ref="item" defaultValue={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
+		<TextInput ref="quant" defaultValue={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
 		<TouchableOpacity onPress={this.submit.bind(this)} style={{backgroundColor: 'blue'}}>
 		    <Text style={{margin: 10, borderRadius: 10, color: 'white'}}>
 			Save

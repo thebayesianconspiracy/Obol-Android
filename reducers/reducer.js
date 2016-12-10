@@ -5,28 +5,28 @@ import {
 } from 'react-native';
 
 const initialState = Immutable.fromJS({
-    "PI 1": {
-	name:'PI 1',
+    "PI_1": {
+	name:'PI_1',
 	status: 'active',
 	weight: "500",
 	category: 'medicine',
 	item: 'apple',
 	quant: "5",
 	messages: [
-	    {content: "Hide yo kids"},
-	    {content: "Woah"},
+	    {weight: "Hide yo kids"},
+	    {weight: "Woah"},
 	],
     },
-    "PI 2": {
-	name:'PI 2',
+    "PI_2": {
+	name:'PI_2',
 	status: 'active',
 	weight: "500",
 	category: 'medicine',
 	item: 'apple',
 	quant: "5",
 	messages: [
-	    {content: "Hide yo kids"},
-	    {content: "Woah"},
+	    {weight: "Hide yo kids"},
+	    {weight: "Woah"},
 	],
     },
 });
@@ -34,11 +34,16 @@ const initialState = Immutable.fromJS({
 function app(state = initialState, action = {}) {
        switch (action.type) {
        	   case "UPDATE":
-	       state = state.mergeDeepIn([action.id], action.data)
+	       return state.mergeDeepIn([action.id], action.data)
+	   case "UPDATE_WEIGHT":
+	       state = state.updateIn([action.id, "messages"], messages => messages.concat({weight: ""+action.weight}))
+	       if (!this.loaded)
+		   Alert.alert("Done", JSON.stringify(state.toJS()));
+	       this.loaded = true;
 	       return state;
 	   default:
 	       return initialState;
-       }      
+       }
 }
 
 const appReducer = combineReducers({

@@ -6,31 +6,29 @@ import {
     View,
     ListView,
 } from 'react-native';
+import { connect } from 'react-redux';
 
-export default class Template extends Component {
+class Device extends Component {
     constructor(props) {
 	super(props);
-	const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-	this.state = {
-	    dataSource: ds.cloneWithRows(this.props.row.messages),
-	}
     }
 
     renderRow(message) {
 	return (<Text>
-	    {message.content}
+	    {message.weight}
 	</Text>);
     }
     
     render() {
-	const {row} = this.props;
+	const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+	const row = this.props.devices.get(this.props.row.name)
 	return (
 	    <View style={styles.container}>
 		<Text>
-		    {row.name}
+		    {row.get('name')}
 		</Text>
 		<ListView
-		    dataSource={this.state.dataSource}
+		    dataSource={ds.cloneWithRows(row.get('messages').toJS())}
 		    renderRow={this.renderRow.bind(this)}
 		/>
 	    </View>
@@ -44,3 +42,12 @@ const styles = StyleSheet.create({
 	backgroundColor: 'white',
     },
 });
+
+
+mapStateToProps = function(state) {
+    return {
+	devices: state.app,
+    }
+}
+
+export default connect(mapStateToProps)(Device);

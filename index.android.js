@@ -22,7 +22,19 @@ import { Provider } from 'react-redux';
 
 function onStart() {
     listen(message => {
-	Alert.alert("Message is", message)
+	try {
+	    const data = JSON.parse(message);
+	    store.dispatch({
+		type: "UPDATE_WEIGHT",
+		id: data.deviceID,
+		weight: Math.abs(data.weight)
+	    });
+//	    Alert.alert("Message is", "weight " + data.weight)
+	}
+	catch(e) {
+	    Alert.alert("Message is", "error")
+	}
+//	Alert.alert("Message is", message)
     })
 }
 

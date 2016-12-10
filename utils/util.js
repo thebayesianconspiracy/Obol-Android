@@ -11,7 +11,7 @@ var _connected = false;
 
 function onConnect() {
 //    Alert.alert("Done", "Working now " + ct++);
-    client.subscribe("/obol/weight");
+    client.subscribe("obol/weight");
     _connected = true;
     for (ind in _queue) {
 	var message = _queue[ind][0];
@@ -59,7 +59,7 @@ init({
     sync : {
     }
 });
-var client = new Paho.MQTT.Client('broker.mqttdashboard.com', 8000, 'slkdfjwlekrjqwll');
+var client = new Paho.MQTT.Client('192.168.43.157', 8000, 'slkdfjwlekrjqwll');
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 client.connect({
