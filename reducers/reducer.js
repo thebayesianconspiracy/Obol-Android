@@ -5,8 +5,8 @@ import {
 } from 'react-native';
 
 const initialState = Immutable.fromJS({
-    "Device 1": {
-	name:'Device 1',
+    "PI 1": {
+	name:'PI 1',
 	status: 'active',
 	weight: "500",
 	category: 'medicine',
@@ -17,8 +17,8 @@ const initialState = Immutable.fromJS({
 	    {content: "Woah"},
 	],
     },
-    "Device 2": {
-	name:'Device 2',
+    "PI 2": {
+	name:'PI 2',
 	status: 'active',
 	weight: "500",
 	category: 'medicine',

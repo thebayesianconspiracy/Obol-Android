@@ -11,7 +11,7 @@ var _connected = false;
 
 function onConnect() {
 //    Alert.alert("Done", "Working now " + ct++);
-    client.subscribe("/yoyo123");
+    client.subscribe("/obol/weight");
     _connected = true;
     for (ind in _queue) {
 	var message = _queue[ind][0];
