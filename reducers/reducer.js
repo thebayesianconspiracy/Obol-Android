@@ -34,6 +34,8 @@ function allEqual(arr) {
 	return false;
     var item = average(arr);
     for (ind in arr) {
+	if (arr[ind] < -2)
+	    return false;
 	if (Math.abs(arr[ind] - item) > 0.2*item && Math.abs(arr[ind] - item) > 8)
 	    return false;
     }
@@ -56,7 +58,7 @@ function app(state = initialState, action = {}) {
 	   case "UPDATE_WEIGHT":
 	       var _messages = [];
 	       state = state.updateIn([action.id, "messages"], messages => {
-		   messages = messages.concat({weight: ""+action.weight}).slice(-10)
+		   messages = messages.concat({weight: ""+action.weight}).slice(-5)
 		   _messages = messages.toJS();
 		   _messages = _messages.map(message => parseFloat(message.weight))
 		   return messages;
@@ -64,7 +66,7 @@ function app(state = initialState, action = {}) {
 		   if (!allEqual(_messages))
 		       return device;
 		   const new_weight = average(_messages);
-		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+parseInt(new_weight/parseFloat(device.get('unitweight'))))
+		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+parseInt(Math.round(new_weight/parseFloat(device.get('unitweight')))))
 		   return device;
 	       })
 	       /* if (!this.loaded)

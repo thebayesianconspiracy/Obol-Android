@@ -27,7 +27,7 @@ function onStart() {
 	    store.dispatch({
 		type: "UPDATE_WEIGHT",
 		id: data.deviceID,
-		weight: Math.abs(data.weight)
+		weight: data.weight
 	    });
 //	    Alert.alert("Message is", "weight " + data.weight)
 	}
