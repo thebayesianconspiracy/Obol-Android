@@ -34,7 +34,7 @@ function allEqual(arr) {
 	return false;
     var item = average(arr);
     for (ind in arr) {
-	if (Math.abs(arr[ind] - item) > 0.2*item)
+	if (Math.abs(arr[ind] - item) > 0.2*item && Math.abs(arr[ind] - item) > 8)
 	    return false;
     }
     return true;
@@ -64,7 +64,7 @@ function app(state = initialState, action = {}) {
 		   if (!allEqual(_messages))
 		       return device;
 		   const new_weight = average(_messages);
-		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => parseInt(new_weight/parseFloat(device.get('unitweight'))))
+		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+parseInt(new_weight/parseFloat(device.get('unitweight'))))
 		   return device;
 	       })
 	       /* if (!this.loaded)

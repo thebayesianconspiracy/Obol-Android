@@ -19,7 +19,7 @@ class SetupDevice extends Component {
 	this.state = {
 	    category: row.category || "Food",
 	    item: row.item,
-	    quant: row.quant,
+	    quant: ""+row.quant,
 	}
     }
 
