@@ -32,7 +32,7 @@ function onStart() {
 //	    Alert.alert("Message is", "weight " + data.weight)
 	}
 	catch(e) {
-	    Alert.alert("Message is", "error")
+	    Alert.alert("Message is", "error "+JSON.stringify(e))
 	}
 //	Alert.alert("Message is", message)
     })

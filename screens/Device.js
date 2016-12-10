@@ -27,6 +27,9 @@ class Device extends Component {
 		<Text>
 		    {row.get('name')}
 		</Text>
+		<Text>
+		    {row.get('unitweight')}
+		</Text>
 		<ListView
 		    dataSource={ds.cloneWithRows(row.get('messages').toJS())}
 		    renderRow={this.renderRow.bind(this)}

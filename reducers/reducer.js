@@ -12,9 +12,8 @@ const initialState = Immutable.fromJS({
 	category: 'medicine',
 	item: 'apple',
 	quant: "5",
+	unitweight: "100",
 	messages: [
-	    {weight: "Hide yo kids"},
-	    {weight: "Woah"},
 	],
     },
     "PI_2": {
@@ -22,24 +21,55 @@ const initialState = Immutable.fromJS({
 	status: 'active',
 	weight: "500",
 	category: 'medicine',
-	item: 'apple',
+	item: 'coconut',
 	quant: "5",
+	unitweight: "100",
 	messages: [
-	    {weight: "Hide yo kids"},
-	    {weight: "Woah"},
 	],
     },
 });
 
+function allEqual(arr) {
+    if (arr.length < 4)
+	return false;
+    var item = average(arr);
+    for (ind in arr) {
+	if (Math.abs(arr[ind] - item) > 0.2*item)
+	    return false;
+    }
+    return true;
+}
+
+function average(arr) {
+    return parseFloat(arr.reduce((a, b) => a+b))/parseFloat(arr.length);
+}
+
 function app(state = initialState, action = {}) {
        switch (action.type) {
        	   case "UPDATE":
-	       return state.mergeDeepIn([action.id], action.data)
+	       state = state.mergeDeepIn([action.id], action.data)
+	       const weight = parseFloat(state.getIn([action.id, 'weight']));
+	       const quant = parseFloat(state.getIn([action.id, 'quant']));
+	       const unitweight = ""+weight/quant;
+	       state = state.mergeDeepIn([action.id], {unitweight});
+	       return state;
 	   case "UPDATE_WEIGHT":
-	       state = state.updateIn([action.id, "messages"], messages => messages.concat({weight: ""+action.weight}))
-	       if (!this.loaded)
-		   Alert.alert("Done", JSON.stringify(state.toJS()));
-	       this.loaded = true;
+	       var _messages = [];
+	       state = state.updateIn([action.id, "messages"], messages => {
+		   messages = messages.concat({weight: ""+action.weight}).slice(-10)
+		   _messages = messages.toJS();
+		   _messages = _messages.map(message => parseFloat(message.weight))
+		   return messages;
+	       }).updateIn([action.id], device => {
+		   if (!allEqual(_messages))
+		       return device;
+		   const new_weight = average(_messages);
+		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => parseInt(new_weight/parseFloat(device.get('unitweight'))))
+		   return device;
+	       })
+	       /* if (!this.loaded)
+		  Alert.alert("Done", JSON.stringify(state.toJS()));
+		  this.loaded = true;*/
 	       return state;
 	   default:
 	       return initialState;
