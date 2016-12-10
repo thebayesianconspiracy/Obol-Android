@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
 	name:'PI_1',
 	status: 'active',
 	weight: "500",
-	category: 'medicine',
+	category: 'Food',
 	item: 'apple',
 	quant: "5",
 	unitweight: "100",
@@ -20,14 +20,20 @@ const initialState = Immutable.fromJS({
 	name:'PI_2',
 	status: 'active',
 	weight: "500",
-	category: 'medicine',
-	item: 'coconut',
+	category: 'Food',
+	item: 'bread',
 	quant: "5",
 	unitweight: "100",
 	messages: [
 	],
     },
 });
+
+const calories = {
+    "apple": 52,
+    "banana": 89,
+    "bread": 65,
+}
 
 function allEqual(arr) {
     if (arr.length < 4)
@@ -65,9 +71,18 @@ function app(state = initialState, action = {}) {
 	       }).updateIn([action.id], device => {
 		   if (!allEqual(_messages))
 		       return device;
+		   const item = device.get('item');
+		   const category = device.get('category');
+		   const old_weight = device.get('weight');
+		   const old_quant = device.get('quant');
 		   const new_weight = average(_messages);
-		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+parseInt(Math.round(new_weight/parseFloat(device.get('unitweight')))))
-		   return device;
+		   const newquant = parseInt(Math.round(new_weight/parseFloat(device.get('unitweight'))));
+		   if (category == 'Food') {
+		       if (newquant < old_quant) {
+			   Alert.alert("You ate " + (old_quant - newquant) + " units of " + item + ". Calories consumed is: " + (parseFloat(old_weight)-parseFloat(new_weight))*calories[item]/4400);
+		       }
+		   }
+		   return device.updateIn(['weight'], weight => ""+new_weight).updateIn(['quant'], quant => ""+newquant);
 	       })
 	       /* if (!this.loaded)
 		  Alert.alert("Done", JSON.stringify(state.toJS()));
