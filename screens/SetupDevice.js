@@ -64,15 +64,15 @@ class SetupDevice extends Component {
 		    <Picker.Item label="Food" value="Food" />
 		    <Picker.Item label="Medicine" value="Medicine" />
 		</Picker>
-		<TouchableOpacity style={{backgroundColor: 'blue'}} onPress={this.tare.bind(this)}>
-		    <Text style={{margin: 10, borderRadius: 10, color: 'white'}}>
+		<TouchableOpacity style={{backgroundColor: 'purple', margin: 8, padding: 10, borderRadius: 5, alignItems: 'center'}} onPress={this.tare.bind(this)}>
+		    <Text style={{margin: 10, borderRadius: 10, color: 'white', fontSize: 15}}>
 			Set to zero
 		    </Text>
 		</TouchableOpacity>
-		<TextInput ref="item" defaultValue={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
-		<TextInput ref="quant" defaultValue={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
-		<TouchableOpacity onPress={this.submit.bind(this)} style={{backgroundColor: 'blue'}}>
-		    <Text style={{margin: 10, borderRadius: 10, color: 'white'}}>
+		<TextInput style={{padding: 8, fontSize: 20}} ref="item" defaultValue={row.item} onChangeText={(item) => this.setState({item})} placeholder="What is it ?" />
+		<TextInput style={{padding: 8, fontSize: 20}} ref="quant" defaultValue={row.quant} onChangeText={(quant) => this.setState({quant})} placeholder="How many are there ?" />
+		<TouchableOpacity onPress={this.submit.bind(this)} style={{backgroundColor: 'purple', margin: 8, padding: 10, borderRadius: 5, alignItems: 'center'}}>
+		    <Text style={{margin: 10, borderRadius: 10, color: 'white', fontSize: 15}}>
 			Save
 		    </Text>
 		</TouchableOpacity>

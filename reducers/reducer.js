@@ -10,7 +10,7 @@ const initialState = Immutable.fromJS({
 	status: 'active',
 	weight: "500",
 	category: 'Food',
-	item: 'apple',
+	item: 'bread',
 	quant: "5",
 	cal: 44,
 	unitweight: "100",
