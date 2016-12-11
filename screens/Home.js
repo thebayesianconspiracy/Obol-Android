@@ -51,15 +51,15 @@ export function triggerNotification() {
 	if (quant2 == quant1 - 1) {
 	    if (quant2 < 3) {
 		sendNotification("Your medicines are running low.");
-		sendMessage({appID: "APP_1", taken: 2}, 'obol/mail');
+		sendMessage(JSON.stringify({appID: "APP_1", taken: 2}), 'obol/mail');
 	    }
 	    else {
 		sendNotification("Good that you have taken your medicines");
-		sendMessage({appID: "APP_1", taken: 1}, 'obol/mail');
+		sendMessage(JSON.stringify({appID: "APP_1", taken: 1}), 'obol/mail');
 	    }
 	}
 	else if (quant2 == quant1) {
-	    sendMessage({appID: "APP_1", taken: 0}, 'obol/mail');
+	    sendMessage(JSON.stringify({appID: "APP_1", taken: 0}), 'obol/mail');
 	    sendNotification("You Haven't taken your medicine");
 	}
     }, 10000);
@@ -69,7 +69,7 @@ function sendNotification(message) {
     initNotification(message, "Reminder");
     setTimeout(() => {
 	PushNotification.cancelAllLocalNotifications()
-    }, 1000);
+    }, 3000);
 }
 
 

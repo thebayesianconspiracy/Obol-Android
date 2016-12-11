@@ -26,6 +26,8 @@ import PushNotification from 'react-native-push-notification';
 
 import PushNotificationAndroid from 'react-native-push-notification'
 
+import PushNotificationsHandler from 'react-native-push-notification';
+
 (function() {
   // Register all the valid actions for notifications here and add the action handler for each action
   PushNotificationAndroid.registerNotificationActions(['Accept','Reject','Yes','No']);
@@ -46,6 +48,7 @@ function onStart() {
     PushNotification.configure({
 	requestPermissions: true,
     });
+    PushNotificationsHandler.requestPermissions()
     listen(message => {
 	try {
 	    const data = JSON.parse(message);
